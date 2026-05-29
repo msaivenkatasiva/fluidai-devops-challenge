@@ -17,12 +17,12 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: 799093034224.dkr.ecr.us-east-1.amazonaws.com/fluid-challenge:latest
+        image: 799093034224.dkr.ecr..amazonaws.com/fluid-challenge:latest
         ports:
         - containerPort: 5000
         env:
         - name: REDIS_HOST
-          value: "red"
+          value: "redis-service"
         readinessProbe:
           httpGet:
             path: /ready
