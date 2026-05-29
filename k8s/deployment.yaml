@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: 799093034224.dkr.ecr..amazonaws.com/fluid-challenge:latest
+        image: 
         ports:
         - containerPort: 5000
         env:
