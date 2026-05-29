@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fluid-app
+  labels:
+    app: fluid-devops
+    environment: demo

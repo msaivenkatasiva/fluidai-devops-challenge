@@ -20,18 +20,27 @@ sudo systemctl enable docker
 sudo usermod -aG docker ec2-user
 echo -e "$G Docker installed $N"
 
+# Installing AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo yum install -y unzip
+unzip awscliv2.zip
+sudo ./aws/install
+rm -rf awscliv2.zip aws/
+echo -e "$G AWS CLI installed $N"
+
+# Installing eksctl
+curl --silent --location \
+  "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" \
+  | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+echo -e "$G eksctl installed $N"
+
 # Installing kubectl
 KUBECTL_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
 curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 echo -e "$G kubectl installed $N"
-
-# Installing Minikube
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
-rm minikube-linux-amd64
-echo -e "$G Minikube installed $N"
 
 # Install Helm
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -45,12 +54,6 @@ sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 echo -e "$G kubens and kubectx installed $N"
-
-# Install Git
-sudo yum install -y git
-git config --global user.name "Sai Venkata Siva Mutyala"
-git config --global user.email "msaivenkatasiva@gmail.com"
-echo -e "$G Git installed $N"
 
 # Install Python3 + pip
 sudo yum install -y python3 python3-pip
@@ -74,12 +77,12 @@ fi
 echo -e "$G All tools installed! $N"
 echo -e "$G Versions: $N"
 docker --version
+aws --version
+eksctl version
 kubectl version --client
-minikube version
 helm version --short
 git --version
 python3 --version
 echo -e "$R IMPORTANT: Logout and login $N"
 echo -e "$R again for Docker group to $N"
-echo -e "$R take effect before starting $N"
-echo -e "$R Minikube! $N"
+echo -e "$R take effect! $N"
